@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 
 class TodoItem extends Component {
+
+    // function to style list items
     getStyle = () => {
         return {
 
@@ -18,19 +20,41 @@ class TodoItem extends Component {
         }
     }
 
-
-
     render() {
+
+        // destructuring used to pull out variables to use
+        // this is better than doing this.props.todo.title 
+        const { id, title } = this.props.todo;
+
         return (
-            <div style={this.getStyle()}>
-                <p>{this.props.todo.title}</p>
+            /* 
+            inline style for each todo list item
+            calls method from the class called getStyle
+            and calls it.
+
+            when the checkbox is clicked, monitored by 
+            onChange click event, method is only then called
+
+            this keyword used as method is in the class
+            arrow function used so can access props
+            props is used in the method to pass up the tree
+            bind is used to pass up id?
+
+            */
+            <div style={this.getStyle()}> 
+                <p>
+                    <input type="checkbox" onChange={this.props.markComplete.bind
+                        (this, id)}/>
+                    {' '}
+                    { title }
+                </p>
             </div>
         )
     }
 }
 
 TodoItem.propTypes = {
-    todos: PropTypes.object.isRequired
+    todo: PropTypes.object.isRequired
 }
 
 export default TodoItem;

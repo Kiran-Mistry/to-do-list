@@ -18,15 +18,34 @@ class App extends Component {
       {
         id: 3,
         title: 'watch tv with family',
-        completed: true,
+        completed: false,
       }, 
     ]
   }
+    // function used to change state of todo item
+    // passes item id into function
+    // toggles between ticked and unticked
+    markComplete = (id) => {
+      //setting state by looping through all the
+      //items in the todo list
+      this.setState({ todos: this.state.todos.map(todo => {
+        //if the current todo item is the same as
+        //the todo item being passed through i/.e 
+        //an item we click
+        if(todo.id === id) {
+          //set tjhe curremt item list to its opposite
+          //e.g. if it is unticked and you click it
+          //then mark it as ticked and line=through
+          todo.completed = !todo.completed
+        }
+        return todo;
+      })})
+    }
 
   render() {
     return (
       <div className="App">
-        <Todos todos={this.state.todos}/>
+        <Todos todos={this.state.todos} markComplete={this.markComplete}/>
       </div>
     );
   }
