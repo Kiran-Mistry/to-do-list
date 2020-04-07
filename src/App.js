@@ -42,10 +42,23 @@ class App extends Component {
       })})
     }
 
+    // Delete ToDo
+
+    /**
+     * passes in everything in state object and
+     * filters where the todo id is not present in the id 
+     * we have
+     * filter() creates new array with elements that pass condition
+     */
+    delTodo = (id) => {
+      this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)]});
+
+    }
+
   render() {
     return (
       <div className="App">
-        <Todos todos={this.state.todos} markComplete={this.markComplete}/>
+        <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo} />
       </div>
     );
   }

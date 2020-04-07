@@ -8,7 +8,7 @@ class Todos extends Component {
         // for each to-do that we loop through
         return this.props.todos.map((todo) => (
             // return the title of that to-do in h3
-            <TodoItem key={todo.id} todo={todo} markComplete={this.props.markComplete}/>
+            <TodoItem key={todo.id} todo={todo} markComplete={this.props.markComplete} delTodo={this.props.delTodo}/>
         ));
     }
 }
