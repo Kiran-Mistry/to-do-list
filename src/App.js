@@ -4,37 +4,43 @@ import Todos from "./components/Todos";
 import Header from "./components/layout/Header";
 import AddTodo from "./components/AddTodo"
 import About from "./components/pages/About"
+
+/**
+ * uuid was removed because json placeholder was supposed
+ * to handle the todo items unique id -- but this is broke
+ * and needs fixing
+ */
 //import { v4 as uuidv4 } from 'uuid';
 
 /*
-axios is used to make https requests
-to get data from external api
+axios is used to make https requests to get data from external
+api. we are using json placeholder as the server
 */
 import axios from 'axios';
 import './App.css';
 
 class App extends Component {
   state = {
-
+    // empty todo items array as we are using json placeholder
     todos:[],
 
-    // this method hard codes our todos
+    // hard codes our todo items
     // todos: [
     //   {
     //     id: uuidv4(),
     //     title: 'take out the trash',
     //     completed: false,
     //   }, 
-    //   {
-    //     id: uuidv4(),
-    //     title: 'buy nappies',
-    //     completed: false,
-    //   }, 
     // ]
   }
 
   componentDidMount() {
-    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+    /**
+     * makes http request to dummy server with todo items
+     * this is a promise, and when it resolves it changes the state
+     * to include data from json placeholder
+     */  
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=2')
     .then(res => this.setState({ todos: res.data }))
     }
     // function used to change state of todo item
