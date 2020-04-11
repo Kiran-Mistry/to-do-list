@@ -4,29 +4,39 @@ import Todos from "./components/Todos";
 import Header from "./components/layout/Header";
 import AddTodo from "./components/AddTodo"
 import About from "./components/pages/About"
-import { v4 as uuidv4 } from 'uuid';
+//import { v4 as uuidv4 } from 'uuid';
+
+/*
+axios is used to make https requests
+to get data from external api
+*/
+import axios from 'axios';
 import './App.css';
 
 class App extends Component {
   state = {
-    todos: [
-      {
-        id: uuidv4(),
-        title: 'take out the trash',
-        completed: false,
-      }, 
-      {
-        id: uuidv4(),
-        title: 'buy nappies',
-        completed: false,
-      }, 
-      {
-        id: uuidv4(),
-        title: 'watch tv with family',
-        completed: false,
-      }, 
-    ]
+
+    todos:[],
+
+    // this method hard codes our todos
+    // todos: [
+    //   {
+    //     id: uuidv4(),
+    //     title: 'take out the trash',
+    //     completed: false,
+    //   }, 
+    //   {
+    //     id: uuidv4(),
+    //     title: 'buy nappies',
+    //     completed: false,
+    //   }, 
+    // ]
   }
+
+  componentDidMount() {
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+    .then(res => this.setState({ todos: res.data }))
+    }
     // function used to change state of todo item
     // passes item id into function
     // toggles between ticked and unticked
@@ -56,20 +66,32 @@ class App extends Component {
      * filter() creates new array with elements that pass condition
      */
     delTodo = (id) => {
-      this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)]});
+      axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      .then(res => this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)]}));
+      
 
     }
 
     /**
      * ADD todo
+     * 
+     * need to sort out the unique if problem!
      */
     addTodo = (title) => {
-      const newTodo = {
-        id: uuidv4(),
+
+      // this was used to set our own unique id before using axios
+      // const newTodo = {
+      //   id: uuidv4(),
+      //   title,
+      //   completed: false,
+      // }
+      axios.post('https://jsonplaceholder.typicode.com/todos', {
+        // id: uuidv4(),
         title,
         completed: false,
-      }
-      this.setState({ todos: [...this.state.todos, newTodo] });
+      })
+      .then(res => this.setState({ todos: [...this.state.todos, res.data] }));
+      
     }
 
   render() {
